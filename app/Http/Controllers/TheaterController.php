@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
-// use App\Events\NewuserregisteredEvent;
+use App\Models\Theater;
 use Illuminate\Http\Request;
 
-class MovieController extends Controller
+class TheaterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-         $movies = Movie::latest()->paginate(3);
-        return view('movie')->with('movies',$movies); 
+        //
+        $theaters = Theater::latest()->paginate(3);
+        return view('theater')->with('theaters',$theaters); 
     }
 
     /**
@@ -37,34 +37,29 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r($request->all());exit;
         //
-        // dd($request->all());
+
         $validateData = $request->validate([
-            'title'=>'required|max:255'
+            'name'=>'required|max:255'
         ]);
-        $movie = Movie::create([
-            'title'=>$request->title,
-            'overview' => $request->overview,
-            'release_year' => $request->release_year,
-            'runtime' => $request->runtime,
-            'cast_mem' => $request->cast_mem,
-            'popular_movie' => $request->popular_movie,
-            'trending_movie' =>$request->trending_movie
+        $theater = Theater::create([
+            'name'=>$request->name,
+            'city' => $request->city,
+            'capacity' => $request->capacity,
 
         ]);
         // event(new NewuserregisteredEvent($movie));
         
-        return redirect(route('movie.index'));
+        return redirect(route('theater.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function show(Movie $movie)
+    public function show(Theater $theater)
     {
         //
     }
@@ -72,47 +67,46 @@ class MovieController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function edit(Movie $movie)
+    public function edit(Theater $theater)
     {
         //
-        return view('movie.edit')->with('movie',$movie);
+        return view('movie.theateredit')->with('theater',$theater);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, Theater $theater)
     {
         //
-        $movie->update($request->all());
-        return redirect(route('movie.index'));
+        $theater->update($request->all());
+        return redirect(route('theater.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Theater  $theater
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy(Theater $theater)
     {
         //
-        $movie->delete();
-        return redirect(route('movie.index'));
+        $theater->delete();
+        return redirect(route('theater.index'));
     }
+
     public function show1()
     {
         $data= Member::pagination(3);
         dd($data);
         return view('/',['members'=>$data]);
     }
-
-    
 }

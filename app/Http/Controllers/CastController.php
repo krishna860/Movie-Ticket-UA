@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
-// use App\Events\NewuserregisteredEvent;
+use App\Models\Cast;
 use Illuminate\Http\Request;
 
-class MovieController extends Controller
+class CastController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-         $movies = Movie::latest()->paginate(3);
-        return view('movie')->with('movies',$movies); 
+        //
+        $casts = Cast::latest()->paginate(3);
+        return view('cast')->with('casts',$casts);
     }
 
     /**
@@ -37,34 +37,32 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r($request->all());exit;
         //
-        // dd($request->all());
+
         $validateData = $request->validate([
-            'title'=>'required|max:255'
+            'name'=>'required|max:255'
         ]);
-        $movie = Movie::create([
-            'title'=>$request->title,
-            'overview' => $request->overview,
-            'release_year' => $request->release_year,
-            'runtime' => $request->runtime,
-            'cast_mem' => $request->cast_mem,
-            'popular_movie' => $request->popular_movie,
-            'trending_movie' =>$request->trending_movie
+        $cast = Cast::create([
+            'gender'=>$request->gender,
+            'name' => $request->name,
+            'bio' => $request->bio,
+            'birthdate' => $request->birthdate,
+            'list' => $request->list,
+            
 
         ]);
         // event(new NewuserregisteredEvent($movie));
         
-        return redirect(route('movie.index'));
+        return redirect(route('cast.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Cast  $cast
      * @return \Illuminate\Http\Response
      */
-    public function show(Movie $movie)
+    public function show(Cast $cast)
     {
         //
     }
@@ -72,40 +70,40 @@ class MovieController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Cast  $cast
      * @return \Illuminate\Http\Response
      */
-    public function edit(Movie $movie)
+    public function edit(Cast $cast)
     {
         //
-        return view('movie.edit')->with('movie',$movie);
+        return view('movie.castedit')->with('cast',$cast);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Cast  $cast
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, Cast $cast)
     {
         //
-        $movie->update($request->all());
-        return redirect(route('movie.index'));
+        $cast->update($request->all());
+        return redirect(route('cast.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  \App\Models\Cast  $cast
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy(Cast $cast)
     {
         //
-        $movie->delete();
-        return redirect(route('movie.index'));
+        $cast->delete();
+        return redirect(route('cast.index'));
     }
     public function show1()
     {
@@ -113,6 +111,4 @@ class MovieController extends Controller
         dd($data);
         return view('/',['members'=>$data]);
     }
-
-    
 }

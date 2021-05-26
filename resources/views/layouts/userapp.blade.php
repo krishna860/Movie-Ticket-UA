@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang ="en">
 <head>
@@ -14,9 +13,13 @@
 <link href="{{asset('css/app.css') }}" rel="stylesheet">
 
 <title>Movie Booking Website</title>
+
 </head>
 <body>
-    @yield('content')
+
+    <div id="app">
+        <router-view></router-view>
+    </div>
+ 
 </body>
 </html>
-</div>
