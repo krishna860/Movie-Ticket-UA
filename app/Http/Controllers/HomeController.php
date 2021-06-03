@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Movie;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,7 +20,7 @@ class HomeController extends Controller
 
     public function index() {
 
-        return view('home'); 
+        return view('home');
     }
 
     public function index2(){
@@ -32,13 +34,30 @@ class HomeController extends Controller
     }
     public function mumbai(){
         return view('mumbai');
-    }  
+    }
     public function ahmedabad(){
         return view('ahmedabad');
-    }  
+    }
     public function book(){
-        return view('booking');
-    }   
+        $movies = Movie::get();
+        return view('booking', compact('movies'));
+    }
+
+     // functioon for book ticket==============
+     public function insertBookData(Request $req){
+         //return $req->all();
+        $movie_title  = $req->input('txtMovie');
+        $total_seat = $req->input('totalSeat');
+        $final_amount = $req->input('totalAmt');
+        $add=DB::table('booking_master')->insert(['movie_title'=>$movie_title, 'total_seat'=>$total_seat, 'final_amount'=>$final_amount]);
+        if($add!=0){
+            echo '<script>alert("Done Booking.")</script>';
+           return redirect('/booking');
+        }
+        else{
+            echo "error in insert courses";
+        }
+    }
 }
 
 

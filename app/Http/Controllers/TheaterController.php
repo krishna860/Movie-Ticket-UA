@@ -109,4 +109,6 @@ class TheaterController extends Controller
         dd($data);
         return view('/',['members'=>$data]);
     }
+
+     
 }

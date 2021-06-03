@@ -114,5 +114,6 @@ class MovieController extends Controller
         return view('/',['members'=>$data]);
     }
 
+  
     
 }
